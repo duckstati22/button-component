@@ -3,12 +3,16 @@ import { computed } from "vue";
 
 const props = defineProps({
   color: { type: String, default: "primary" },
+  icon: Boolean,
   link: Boolean,
 });
 
 const buttonClassReducer = computed(() => {
   if (props.link) {
     return `base-link`;
+  }
+  if (props.icon) {
+    return `base-btn base-btn_icon base-btn_${props.color}`;
   }
   return `base-btn base-btn_regular base-btn_${props.color}`;
 });
@@ -82,6 +86,11 @@ a {
 
 .base-btn_regular {
   padding: 0.78em 1.75em;
+}
+.base-btn_icon {
+  max-width: 60px;
+  max-height: 60px;
+  padding: 15px;
 }
 
 .base-btn_primary {
