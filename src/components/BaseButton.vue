@@ -3,21 +3,29 @@ import { computed } from "vue";
 
 const props = defineProps({
   color: { type: String, default: "primary" },
+  link: Boolean,
 });
 
 const buttonClassReducer = computed(() => {
+  if (props.link) {
+    return `base-link`;
+  }
   return `base-btn base-btn_regular base-btn_${props.color}`;
 });
 </script>
 
 <template>
-  <button :class="buttonClassReducer">
+  <a v-if="props.link" :class="buttonClassReducer">
+    <slot></slot>
+  </a>
+  <button v-else :class="buttonClassReducer">
     <slot></slot>
   </button>
 </template>
 
 <style scoped>
-button {
+button,
+a {
   --primaryBackgroundColor: #702c7e;
   --secondaryBackgroundColor: #c4296c;
   --warningBackgroundColor: #f4ba46;
@@ -32,6 +40,20 @@ button {
   display: revert;
   box-sizing: border-box;
   cursor: pointer;
+}
+
+.base-link {
+  text-decoration: underline;
+  text-decoration-skip-ink: none;
+  transition: all 0.2s;
+}
+@media screen and (hover: hover) {
+  .base-link:hover {
+    color: var(--secondaryTextColor);
+  }
+}
+.base-link:visited {
+  color: var(--secondaryBackgroundColor);
 }
 
 .base-btn {
