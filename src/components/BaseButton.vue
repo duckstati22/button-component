@@ -1,10 +1,13 @@
 <script setup>
-import { computed } from "vue";
+import { ref, computed } from "vue";
+import ButtonTimer from "./ButtonTimer.vue";
 
 const props = defineProps({
   color: { type: String, default: "primary" },
   icon: Boolean,
   link: Boolean,
+  replacementText: String,
+  timer: String,
 });
 
 const buttonClassReducer = computed(() => {
@@ -16,14 +19,39 @@ const buttonClassReducer = computed(() => {
   }
   return `base-btn base-btn_regular base-btn_${props.color}`;
 });
+
+const formattedTimer = computed(() => {
+  return props.timer * 1000;
+});
+
+const showTimer = ref(false);
+const replaceText = ref(false);
+function toggleShow(e) {
+  showTimer.value = !showTimer.value;
+  e.target.disabled = !e.target.disabled;
+  if (props.replacementText) {
+    replaceText.value = !replaceText.value;
+  }
+}
+function setTimer(e) {
+  if (!props.timer || props.icon) {
+    return;
+  }
+  toggleShow(e);
+  setTimeout(() => {
+    toggleShow(e);
+  }, formattedTimer.value);
+}
 </script>
 
 <template>
   <a v-if="props.link" :class="buttonClassReducer">
     <slot></slot>
   </a>
-  <button v-else :class="buttonClassReducer">
-    <slot></slot>
+  <button v-else @click="setTimer" :class="buttonClassReducer">
+    <slot v-if="!replaceText"></slot>
+    <template v-else-if="replaceText">{{ replacementText }}</template>
+    <ButtonTimer v-if="showTimer" :timer="formattedTimer" />
   </button>
 </template>
 
