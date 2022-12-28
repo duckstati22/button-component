@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap');
+@font-face {
+  font-family: Phosphate;
+  src: url(./Phosphate_Fixed_Solid.ttf);
+}
+
+body {
+  font-family: Phosphate, sans-serif;
+  font-size: 1.125rem;
+  line-height: 1.5;
+  color: white;
+}
+
+.column-header {
+  text-align: center;
+  text-transform: uppercase;
+  color: #c8c8c8;
+}
+.btn-header {
+  text-transform: uppercase;
+}
+.btn-header_lowercase {
+  text-transform: lowercase;
+}
