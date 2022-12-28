@@ -139,4 +139,12 @@ a {
 .base-btn_action {
   background-color: var(--actionBackgroundColor);
 }
+
+@media screen and (max-width: 640px) {
+  .base-btn_icon {
+    max-width: 52px;
+    max-height: 52px;
+    padding: 14px;
+  }
+}
 </style>
